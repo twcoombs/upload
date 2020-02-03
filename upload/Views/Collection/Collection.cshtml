@@ -1,0 +1,21 @@
+﻿@model upload.ViewModels.CollectionAndPointViewModel
+@{
+    ViewBag.Title = "Collection";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.Collection.Name</h2>
+
+@if (Model.CollectionPoints.Count ==0)
+{
+    <text> No Collection Meta-data Defined Within Collection </text>
+}
+<ul>
+
+@foreach (var collectionPoint in Model.CollectionPoints)
+{
+    <li>@collectionPoint.Attribute</li>
+}
+
+</ul>
+

@@ -1,0 +1,43 @@
+﻿@model IEnumerable<upload.Models.Collection>
+@using System.Web.Mvc.Html;
+
+@{
+    ViewBag.Title = "Collection";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>View All Available Data Source Definitions</h2>
+
+
+@if (!Model.Any())
+{
+    <p>We don't have any customers yet.</p>
+}
+else
+{
+<table>
+    <thead>
+        <tr>
+            <th>Collection Id</th>
+            <th>Collection Name</th>
+            <th>Collection File Type</th>
+            <th>Collection File Extension</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var collection in Model)
+        {
+            <tr>
+                <td>@Html.ActionLink(collection.Name, "Collection", "Collection", new { id = collection.Id }, null)</td>
+                <td>@collection.Id</td>
+                <td>@collection.Name</td>
+                <td>@collection.CollectionFileType.FileType</td>
+                <td>@collection.CollectionFileType.FileExtension</td>
+            </tr>
+        }
+    </tbody>
+</table>
+}
+
+
