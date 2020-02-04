@@ -1,4 +1,6 @@
 ﻿@model upload.ViewModels.CollectionAndPointViewModel
+
+@using upload.Extensions
 @{
     ViewBag.Title = "Collection";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -12,16 +14,30 @@
 }
 else
 {
-    @using (Html.BeginForm("SubmitPoints", "Collection"))
+    using (Html.BeginForm("SaveCollectionPoint", "Collection"))
     {
-    }
 
-    @using (Html.BeginForm("Create", "Collection"))
-    {
-        @foreach (var collectionPoint in Model.CollectionPoints)
+        foreach (var collectionPoint in Model.CollectionPoints.WithIndex())
         {
-            <li>@collectionPoint.Attribute</li>
+            <div class="form-inline">
+                @Html.LabelFor(m => m.CollectionPoints[collectionPoint.Index].LineKey)
+                @Html.TextBoxFor(m => m.CollectionPoints[collectionPoint.Index].LineKey, new { @class = "form-control" })
+                @Html.LabelFor(m => m.CollectionPoints[collectionPoint.Index].Set)
+                @Html.TextBoxFor(m => m.CollectionPoints[collectionPoint.Index].Set, new { @class = "form-control" })
+                @Html.LabelFor(m => m.CollectionPoints[collectionPoint.Index].Attribute)
+                @Html.TextBoxFor(m => m.CollectionPoints[collectionPoint.Index].Attribute, new { @class = "form-control" })
+                @Html.LabelFor(m => m.CollectionPoints[collectionPoint.Index].DataType)
+                @Html.TextBoxFor(m => m.CollectionPoints[collectionPoint.Index].DataType, new { @class = "form-control" })
+                @Html.HiddenFor(m => m.CollectionPoints[collectionPoint.Index].Id, new { @class = "form-control" })
+                @Html.HiddenFor(m => m.CollectionPoints[collectionPoint.Index].CollectionId, new { @class = "form-control" })
+            </div>
+
         }
+
+        <hr />
+        <button type="submit" class="btn btn-primary">Submit Changes</button>
+    }
+}
 
 
 

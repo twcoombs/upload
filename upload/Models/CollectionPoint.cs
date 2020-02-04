@@ -11,6 +11,7 @@ namespace upload.Models
         [Required]
         public int Id { get; set; }
         [Required]
+        [Display(Name = "Line")]
         public int LineKey { get; set; }
         public int Set { get; set; }
         [Required]

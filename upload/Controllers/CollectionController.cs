@@ -83,6 +83,7 @@ namespace upload.Controllers
             return View(collection);
         }
 
+        //[HttpPost]
         public ActionResult Collection(int id)
         {
             var collection = _context.Collection.SingleOrDefault(c => c.Id == id);
@@ -102,6 +103,28 @@ namespace upload.Controllers
             };
 
             return View(viewModel);
+        }
+
+        //[HttpPost]
+        public ActionResult SaveCollectionPoint(CollectionAndPointViewModel viewModel)
+        {
+
+            foreach(var collectionPoint in viewModel.CollectionPoints)
+            {
+                var collectionPointDB = _context.CollectionPoint.Single(c => c.Id == collectionPoint.Id);
+
+                collectionPointDB.LineKey = collectionPoint.LineKey;
+                collectionPointDB.Set = collectionPoint.Set;
+                collectionPointDB.Attribute = collectionPoint.Attribute;
+                collectionPointDB.DataType = collectionPoint.DataType;
+                collectionPointDB.Comments = collectionPoint.Comments;
+
+            }
+
+            _context.SaveChanges();
+
+            //redirect to Collection
+            return RedirectToAction("Index", "Collection");
         }
     }
 }
