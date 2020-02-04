@@ -22,6 +22,50 @@ namespace upload.Controllers
             _context.Dispose();
         }
 
+
+        public ActionResult New()
+        {
+            var fileExtensionTypes = _context.CollectionFileType.ToList();
+
+            var viewModel = new NewCollectionViewModel
+            {
+                CollectionFileTypes = fileExtensionTypes
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Create(Collection collection)
+        {
+            _context.Collection.Add(collection);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Collection");
+        }
+
+        [HttpPost]
+        public ActionResult NewPoints(int id)
+        {
+            var collection = _context.Collection.SingleOrDefault(c => c.Id == id);
+
+            var collectionPoints = _context.CollectionPoint.Where(cp => cp.CollectionId == id).ToList();
+
+            if (collection == null)
+                return HttpNotFound();
+
+            if (collectionPoints == null)
+                return HttpNotFound();
+
+            var viewModel = new CollectionAndPointViewModel
+            {
+                Collection = collection,
+                CollectionPoints = collectionPoints
+            };
+
+            return View(viewModel);
+        }
+
         public ViewResult Index()
         {
             var collections = _context.Collection.Include(c => c.CollectionFileType).ToList();
@@ -38,16 +82,18 @@ namespace upload.Controllers
 
             return View(collection);
         }
-        // GET: Collection
+
         public ActionResult Collection(int id)
         {
-            var collection = new Collection() { Name = "Collection " + id };
-            var collectionPoints = new List<CollectionPoint>
-            {
-                new CollectionPoint {LineKey=1, Set =1, Attribute = "ID", DataType = "Integer", Comments = "Test Point One"},
-                new CollectionPoint {LineKey=1, Set =1, Attribute = "Name", DataType = "String", Comments = "Test Point One"},
-                new CollectionPoint {LineKey=1, Set =1, Attribute = "Value", DataType = "Integer", Comments = "Test Point One"}
-            };
+            var collection = _context.Collection.SingleOrDefault(c => c.Id == id);
+
+            var collectionPoints = _context.CollectionPoint.Where(cp => cp.CollectionId == id).ToList();
+
+            if (collection == null)
+                return HttpNotFound();
+
+            if (collectionPoints == null)
+                return HttpNotFound();
 
             var viewModel = new CollectionAndPointViewModel
             {

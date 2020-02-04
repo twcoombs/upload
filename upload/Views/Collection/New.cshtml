@@ -1,0 +1,28 @@
+﻿@model upload.ViewModels.NewCollectionViewModel
+@{
+    ViewBag.Title = "New";
+}
+
+<h2>Create a New Collection</h2>
+
+@using (Html.BeginForm("Create", "Collection"))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Collection.Name)
+        @Html.TextBoxFor(m => m.Collection.Name, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Collection.CollectionFileType.FileType)
+        @Html.DropDownListFor(m => m.Collection.CollectionFileTypeId, new SelectList(Model.CollectionFileTypes, "Id", "FileType"), "Select File Type", new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label for="exampleInputFile">Choose File</label>
+        <input type="file" id="exampleInputFile">
+        <p class="help-block">Select the Template File</p>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit File</button>
+
+}
+
+

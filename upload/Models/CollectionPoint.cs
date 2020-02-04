@@ -18,5 +18,7 @@ namespace upload.Models
         [Required]
         public string DataType { get; set; }
         public string Comments { get; set; }
+        public Collection Collection{ get; set; }
+        public int CollectionId { get; set; }
     }
 }

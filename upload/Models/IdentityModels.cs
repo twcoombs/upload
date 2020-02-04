@@ -20,9 +20,11 @@ namespace upload.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-
+        public DbSet<Schedule> Schedule { get; set; }
+        public DbSet<ScheduleType> ScheduleType { get; set; }
         public DbSet<Collection> Collection { get; set; }
         public DbSet<CollectionPoint> CollectionPoint { get; set; }
+        public DbSet<CollectionFileType> CollectionFileType { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

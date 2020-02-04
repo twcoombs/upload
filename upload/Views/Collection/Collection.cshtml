@@ -6,16 +6,22 @@
 
 <h2>@Model.Collection.Name</h2>
 
-@if (Model.CollectionPoints.Count ==0)
+@if (Model.CollectionPoints.Count == 0)
 {
     <text> No Collection Meta-data Defined Within Collection </text>
 }
-<ul>
-
-@foreach (var collectionPoint in Model.CollectionPoints)
+else
 {
-    <li>@collectionPoint.Attribute</li>
-}
+    @using (Html.BeginForm("SubmitPoints", "Collection"))
+    {
+    }
 
-</ul>
+    @using (Html.BeginForm("Create", "Collection"))
+    {
+        @foreach (var collectionPoint in Model.CollectionPoints)
+        {
+            <li>@collectionPoint.Attribute</li>
+        }
+
+
 

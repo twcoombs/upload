@@ -167,31 +167,17 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Migrations\202002030845385_CollectionFileTYpe.cs" />
-    <Compile Include="Migrations\202002030845385_CollectionFileTYpe.Designer.cs">
-      <DependentUpon>202002030845385_CollectionFileTYpe.cs</DependentUpon>
+    <Compile Include="Migrations\202002032035320_InitialMigration.cs" />
+    <Compile Include="Migrations\202002032035320_InitialMigration.Designer.cs">
+      <DependentUpon>202002032035320_InitialMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202002030850210_UpdateCollectionFIleTypes.cs" />
-    <Compile Include="Migrations\202002030850210_UpdateCollectionFIleTypes.Designer.cs">
-      <DependentUpon>202002030850210_UpdateCollectionFIleTypes.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\.cs" />
-    <Compile Include="Migrations\.Designer.cs">
-      <DependentUpon>.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202002030855117_updateCollectionFileType.cs" />
-    <Compile Include="Migrations\202002030855117_updateCollectionFileType.Designer.cs">
-      <DependentUpon>202002030855117_updateCollectionFileType.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202002030855247_PopulateCollectionFileTypes1.cs" />
-    <Compile Include="Migrations\202002030855247_PopulateCollectionFileTypes1.Designer.cs">
-      <DependentUpon>202002030855247_PopulateCollectionFileTypes1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202002030904233_RequiredAttribute.cs" />
-    <Compile Include="Migrations\202002030904233_RequiredAttribute.Designer.cs">
-      <DependentUpon>202002030904233_RequiredAttribute.cs</DependentUpon>
+    <Compile Include="Migrations\202002032036076_populate.cs" />
+    <Compile Include="Migrations\202002032036076_populate.Designer.cs">
+      <DependentUpon>202002032036076_populate.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\CollectionFileType.cs" />
+    <Compile Include="Models\Schedule.cs" />
+    <Compile Include="Models\ScheduleType.cs" />
     <Compile Include="ViewModels\CollectionAndPointViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CollectionController.cs" />
@@ -199,10 +185,6 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202002030728039_InitialModel.cs" />
-    <Compile Include="Migrations\202002030728039_InitialModel.Designer.cs">
-      <DependentUpon>202002030728039_InitialModel.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -212,6 +194,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\NewCollectionViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-spacelab.css" />
@@ -272,6 +255,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Collection\Collection.cshtml" />
     <Content Include="Views\Collection\Index.cshtml" />
+    <Content Include="Views\Collection\New.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -290,26 +274,11 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202002030728039_InitialModel.resx">
-      <DependentUpon>202002030728039_InitialModel.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202002032035320_InitialMigration.resx">
+      <DependentUpon>202002032035320_InitialMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202002030845385_CollectionFileTYpe.resx">
-      <DependentUpon>202002030845385_CollectionFileTYpe.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202002030850210_UpdateCollectionFIleTypes.resx">
-      <DependentUpon>202002030850210_UpdateCollectionFIleTypes.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\.resx">
-      <DependentUpon>.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202002030855117_updateCollectionFileType.resx">
-      <DependentUpon>202002030855117_updateCollectionFileType.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202002030855247_PopulateCollectionFileTypes1.resx">
-      <DependentUpon>202002030855247_PopulateCollectionFileTypes1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202002030904233_RequiredAttribute.resx">
-      <DependentUpon>202002030904233_RequiredAttribute.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202002032036076_populate.resx">
+      <DependentUpon>202002032036076_populate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
@@ -352,4 +321,11 @@
   </Target>
   <Target Name="AfterBuild">
   </Target> -->
+  <Target Name="CopyRoslynFiles" AfterTargets="AfterBuild" Condition="!$(Disable_CopyWebApplication) And '$(OutDir)' != '$(OutputPath)'">
+    <ItemGroup>
+      <RoslynFiles Include="$(CscToolPath)\*" />
+    </ItemGroup>
+    <MakeDir Directories="$(WebProjectOutputDir)\bin\roslyn" />
+    <Copy SourceFiles="@(RoslynFiles)" DestinationFolder="$(WebProjectOutputDir)\bin\roslyn" SkipUnchangedFiles="true" Retries="$(CopyRetryCount)" RetryDelayMilliseconds="$(CopyRetryDelayMilliseconds)" />
+  </Target>
 </Project>

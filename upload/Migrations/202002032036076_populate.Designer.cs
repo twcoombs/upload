@@ -7,13 +7,13 @@ namespace upload.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class RequiredAttribute : IMigrationMetadata
+    public sealed partial class populate : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(RequiredAttribute));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(populate));
         
         string IMigrationMetadata.Id
         {
-            get { return "202002030904233_RequiredAttribute"; }
+            get { return "202002032036076_populate"; }
         }
         
         string IMigrationMetadata.Source
