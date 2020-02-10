@@ -14,5 +14,6 @@ namespace upload.Models
         public string Name { get; set; }
         public CollectionFileType CollectionFileType { get; set; }
         public byte CollectionFileTypeId { get; set; }
+
     }
 }

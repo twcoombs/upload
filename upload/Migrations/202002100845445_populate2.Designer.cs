@@ -7,13 +7,13 @@ namespace upload.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class populate : IMigrationMetadata
+    public sealed partial class populate2 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(populate));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(populate2));
         
         string IMigrationMetadata.Id
         {
-            get { return "202002032036076_populate"; }
+            get { return "202002100845445_populate2"; }
         }
         
         string IMigrationMetadata.Source

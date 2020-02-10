@@ -90,6 +90,8 @@ namespace upload.Controllers
 
             var collectionPoints = _context.CollectionPoint.Where(cp => cp.CollectionId == id).ToList();
 
+            var pointTypes = _context.PointType.ToList();
+
             if (collection == null)
                 return HttpNotFound();
 
@@ -99,7 +101,8 @@ namespace upload.Controllers
             var viewModel = new CollectionAndPointViewModel
             {
                 Collection = collection,
-                CollectionPoints = collectionPoints
+                CollectionPoints = collectionPoints,
+                PointTypes = pointTypes
             };
 
             return View(viewModel);
@@ -113,10 +116,8 @@ namespace upload.Controllers
             {
                 var collectionPointDB = _context.CollectionPoint.Single(c => c.Id == collectionPoint.Id);
 
-                collectionPointDB.LineKey = collectionPoint.LineKey;
-                collectionPointDB.Set = collectionPoint.Set;
                 collectionPointDB.Attribute = collectionPoint.Attribute;
-                collectionPointDB.DataType = collectionPoint.DataType;
+                collectionPointDB.PointTypeId = collectionPoint.PointTypeId;
                 collectionPointDB.Comments = collectionPoint.Comments;
 
             }

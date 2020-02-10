@@ -45,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -157,9 +160,6 @@
     <Reference Include="Microsoft.Owin.Security.OAuth">
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.4.0.0\lib\net451\Microsoft.Owin.Security.OAuth.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
-      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -168,17 +168,27 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Extensions\LinqExtensions.cs" />
-    <Compile Include="Migrations\202002032035320_InitialMigration.cs" />
-    <Compile Include="Migrations\202002032035320_InitialMigration.Designer.cs">
-      <DependentUpon>202002032035320_InitialMigration.cs</DependentUpon>
+    <Compile Include="Migrations\202002100841473_new.cs" />
+    <Compile Include="Migrations\202002100841473_new.Designer.cs">
+      <DependentUpon>202002100841473_new.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202002032036076_populate.cs" />
-    <Compile Include="Migrations\202002032036076_populate.Designer.cs">
-      <DependentUpon>202002032036076_populate.cs</DependentUpon>
+    <Compile Include="Migrations\202002100842172_populate.cs" />
+    <Compile Include="Migrations\202002100842172_populate.Designer.cs">
+      <DependentUpon>202002100842172_populate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002100845445_populate2.cs" />
+    <Compile Include="Migrations\202002100845445_populate2.Designer.cs">
+      <DependentUpon>202002100845445_populate2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002100849105_new2.cs" />
+    <Compile Include="Migrations\202002100849105_new2.Designer.cs">
+      <DependentUpon>202002100849105_new2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CollectionFileType.cs" />
-    <Compile Include="Models\Schedule.cs" />
-    <Compile Include="Models\ScheduleType.cs" />
+    <Compile Include="Models\CollectionSchedule.cs" />
+    <Compile Include="Models\CollectionScheduleType.cs" />
+    <Compile Include="Models\PointType.cs" />
     <Compile Include="ViewModels\CollectionAndPointViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CollectionController.cs" />
@@ -187,7 +197,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Collection.cs" />
     <Compile Include="Models\CollectionPoint.cs" />
@@ -275,11 +284,17 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202002032035320_InitialMigration.resx">
-      <DependentUpon>202002032035320_InitialMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202002100841473_new.resx">
+      <DependentUpon>202002100841473_new.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202002032036076_populate.resx">
-      <DependentUpon>202002032036076_populate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202002100842172_populate.resx">
+      <DependentUpon>202002100842172_populate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002100845445_populate2.resx">
+      <DependentUpon>202002100845445_populate2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002100849105_new2.resx">
+      <DependentUpon>202002100849105_new2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
@@ -310,15 +325,16 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
-  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
+<Target Name="CopyRoslynFiles" AfterTargets="AfterBuild" Condition="!$(Disable_CopyWebApplication) And '$(OutDir)' != '$(OutputPath)'">
+    <ItemGroup>
+      <RoslynFiles Include="$(CscToolPath)\*" />
+    </ItemGroup>
+    <MakeDir Directories="$(WebProjectOutputDir)\bin\roslyn" />
+    <Copy SourceFiles="@(RoslynFiles)" DestinationFolder="$(WebProjectOutputDir)\bin\roslyn" SkipUnchangedFiles="true" Retries="$(CopyRetryCount)" RetryDelayMilliseconds="$(CopyRetryDelayMilliseconds)" />
+</Target>
   </Target>
   <Target Name="AfterBuild">
   </Target> -->
@@ -328,5 +344,11 @@
     </ItemGroup>
     <MakeDir Directories="$(WebProjectOutputDir)\bin\roslyn" />
     <Copy SourceFiles="@(RoslynFiles)" DestinationFolder="$(WebProjectOutputDir)\bin\roslyn" SkipUnchangedFiles="true" Retries="$(CopyRetryCount)" RetryDelayMilliseconds="$(CopyRetryDelayMilliseconds)" />
+  </Target>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
   </Target>
 </Project>

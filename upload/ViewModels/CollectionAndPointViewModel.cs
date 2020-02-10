@@ -10,5 +10,6 @@ namespace upload.ViewModels
     {
         public Collection Collection { get; set; }
         public List<CollectionPoint> CollectionPoints { get; set; }
+        public List<PointType> PointTypes { get; set; }
     }
 }

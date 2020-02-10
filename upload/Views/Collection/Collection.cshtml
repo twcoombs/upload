@@ -19,18 +19,18 @@ else
 
         foreach (var collectionPoint in Model.CollectionPoints.WithIndex())
         {
-            <div class="form-inline">
-                @Html.LabelFor(m => m.CollectionPoints[collectionPoint.Index].LineKey)
-                @Html.TextBoxFor(m => m.CollectionPoints[collectionPoint.Index].LineKey, new { @class = "form-control" })
-                @Html.LabelFor(m => m.CollectionPoints[collectionPoint.Index].Set)
-                @Html.TextBoxFor(m => m.CollectionPoints[collectionPoint.Index].Set, new { @class = "form-control" })
-                @Html.LabelFor(m => m.CollectionPoints[collectionPoint.Index].Attribute)
-                @Html.TextBoxFor(m => m.CollectionPoints[collectionPoint.Index].Attribute, new { @class = "form-control" })
-                @Html.LabelFor(m => m.CollectionPoints[collectionPoint.Index].DataType)
-                @Html.TextBoxFor(m => m.CollectionPoints[collectionPoint.Index].DataType, new { @class = "form-control" })
-                @Html.HiddenFor(m => m.CollectionPoints[collectionPoint.Index].Id, new { @class = "form-control" })
-                @Html.HiddenFor(m => m.CollectionPoints[collectionPoint.Index].CollectionId, new { @class = "form-control" })
-            </div>
+<div class="form-inline">
+    @Html.LabelFor(m => m.CollectionPoints[collectionPoint.Index].Attribute)
+    @Html.TextBoxFor(m => m.CollectionPoints[collectionPoint.Index].Attribute, new { @class = "form-control" })
+    
+    @Html.LabelFor(m => m.CollectionPoints[collectionPoint.Index].PointTypeId)
+    @Html.DropDownListFor(m => m.CollectionPoints[collectionPoint.Index].PointTypeId, new SelectList(Model.PointTypes, "Id", "Type",Model.CollectionPoints[collectionPoint.Index].PointTypeId),new { @class = "form-control" })
+    
+    @Html.LabelFor(m => m.CollectionPoints[collectionPoint.Index].Comments)
+    @Html.TextBoxFor(m => m.CollectionPoints[collectionPoint.Index].Comments, new { @class = "form-control" })
+    @Html.HiddenFor(m => m.CollectionPoints[collectionPoint.Index].Id, new { @class = "form-control" })
+    @Html.HiddenFor(m => m.CollectionPoints[collectionPoint.Index].CollectionId, new { @class = "form-control" })
+</div>
 
         }
 

@@ -3,7 +3,7 @@ namespace upload.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialMigration : DbMigration
+    public partial class _new : DbMigration
     {
         public override void Up()
         {
@@ -37,13 +37,45 @@ namespace upload.Migrations
                         LineKey = c.Int(nullable: false),
                         Set = c.Int(nullable: false),
                         Attribute = c.String(nullable: false),
-                        DataType = c.String(nullable: false),
+                        PointTypeId = c.Int(nullable: false),
                         Comments = c.String(),
                         CollectionId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Collections", t => t.CollectionId, cascadeDelete: true)
+                .ForeignKey("dbo.PointTypes", t => t.PointTypeId, cascadeDelete: true)
+                .Index(t => t.PointTypeId)
                 .Index(t => t.CollectionId);
+            
+            CreateTable(
+                "dbo.PointTypes",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Type = c.String(),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.CollectionSchedules",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(nullable: false),
+                        CollectionScheduleTypeId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.CollectionScheduleTypes", t => t.CollectionScheduleTypeId, cascadeDelete: true)
+                .Index(t => t.CollectionScheduleTypeId);
+            
+            CreateTable(
+                "dbo.CollectionScheduleTypes",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Type = c.String(),
+                    })
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.AspNetRoles",
@@ -67,27 +99,6 @@ namespace upload.Migrations
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId)
                 .Index(t => t.RoleId);
-            
-            CreateTable(
-                "dbo.Schedules",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false),
-                        ScheduleTypeId = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.ScheduleTypes", t => t.ScheduleTypeId, cascadeDelete: true)
-                .Index(t => t.ScheduleTypeId);
-            
-            CreateTable(
-                "dbo.ScheduleTypes",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Type = c.String(),
-                    })
-                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -141,26 +152,29 @@ namespace upload.Migrations
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Schedules", "ScheduleTypeId", "dbo.ScheduleTypes");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.CollectionSchedules", "CollectionScheduleTypeId", "dbo.CollectionScheduleTypes");
+            DropForeignKey("dbo.CollectionPoints", "PointTypeId", "dbo.PointTypes");
             DropForeignKey("dbo.CollectionPoints", "CollectionId", "dbo.Collections");
             DropForeignKey("dbo.Collections", "CollectionFileTypeId", "dbo.CollectionFileTypes");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
-            DropIndex("dbo.Schedules", new[] { "ScheduleTypeId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.CollectionSchedules", new[] { "CollectionScheduleTypeId" });
             DropIndex("dbo.CollectionPoints", new[] { "CollectionId" });
+            DropIndex("dbo.CollectionPoints", new[] { "PointTypeId" });
             DropIndex("dbo.Collections", new[] { "CollectionFileTypeId" });
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
-            DropTable("dbo.ScheduleTypes");
-            DropTable("dbo.Schedules");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.CollectionScheduleTypes");
+            DropTable("dbo.CollectionSchedules");
+            DropTable("dbo.PointTypes");
             DropTable("dbo.CollectionPoints");
             DropTable("dbo.CollectionFileTypes");
             DropTable("dbo.Collections");

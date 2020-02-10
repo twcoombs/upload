@@ -11,13 +11,11 @@ namespace upload.Models
         [Required]
         public int Id { get; set; }
         [Required]
-        [Display(Name = "Line")]
-        public int LineKey { get; set; }
-        public int Set { get; set; }
-        [Required]
         public string Attribute { get; set; }
         [Required]
-        public string DataType { get; set; }
+        public PointType PointType { get; set; }
+        [Required]
+        public int PointTypeId { get; set; }
         public string Comments { get; set; }
         public Collection Collection{ get; set; }
         public int CollectionId { get; set; }

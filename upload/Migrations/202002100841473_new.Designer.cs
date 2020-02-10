@@ -7,13 +7,13 @@ namespace upload.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class InitialMigration : IMigrationMetadata
+    public sealed partial class _new : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialMigration));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(_new));
         
         string IMigrationMetadata.Id
         {
-            get { return "202002032035320_InitialMigration"; }
+            get { return "202002100841473_new"; }
         }
         
         string IMigrationMetadata.Source

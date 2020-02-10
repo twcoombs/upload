@@ -5,10 +5,10 @@ using System.Web;
 
 namespace upload.Models
 {
-    public class ScheduleType
+    public class PointType
     {
         public int Id { get; set; }
-        public string Type { get; set; }
 
+        public string Type { get; set; }
     }
 }
