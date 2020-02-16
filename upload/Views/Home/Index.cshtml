@@ -1,31 +1,53 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-md-12">
+                    <img src="~/Content/Images/MagicBox.png" class="rounded float-left">
+            </div>
+        </div>
+        <hr />
+        <p class="lead">"I live on the 4th floor and I was taking my dog out for a walk, so we took the elevator down. The dog got in the elevator on my floor and when the door opened we were on the ground floor. The dog thought, "How the fuck did that happen? We were in a magic box!""</p>
+        <p class="lead; text-right">-Anonymous 1999</p>
+        <p><a href="https://en.wikipedia.org/wiki/The_Magic_Box" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    </div>
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Getting started</h2>
+        <h2>What?</h2>
         <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
+            Magic Box is the data collection hub for Christchurch City Council. As a diverse business
+            the Council runs an enormous diversity of data ingestion pipelines and we were struggling
+            to keep them all functioning at the same level of data quality, features and operability.
+            <br/><br />
+            Magic Box is targeted at ingesting the Council's internal and external datasets through a single framework.
         </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        <p><a class="btn btn-default" href="https://whatis.techtarget.com/definition/data-ingestion">Learn more &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        <h2>Why?</h2>
+        <p>
+            Rates are used by Council to fund the balance of its costs once all other funding sources are taken
+            into account.
+            <br /><br />
+            IT Efficiencies save you tax dollars
+            <br /><br />
+            Rates increases at less than 5%
+        </p>
+        <p><a class="btn btn-default" href="https://ccc.govt.nz/services/rates-and-valuations/rates-and-valuation-search">Learn more &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        <h2>How?</h2>
+        <p>
+            To be able to submit data to a defined data collection you must first register to use Magic Box.
+            To become a Boxie please click the button below to register. Or log in if you are an existing user.
+            <br /><br />
+            Thanks!
+        </p>
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <input type="button" class="btn btn-default" value="Register &raquo" onclick="@("window.location.href='" + @Url.Action("Register", "Account") + "'");">
+            <input type="button" class="btn btn-default" value="Login &raquo" onclick="@("window.location.href='" + @Url.Action("Login", "Account") + "'");">
+        </div>
     </div>
 </div>

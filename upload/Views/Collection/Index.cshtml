@@ -6,46 +6,67 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Current List of All Availabile Data Ingestion Definitions</h2>
 
-
-@if (!Model.Any())
+@if (TempData["message"] != null)
 {
-    <p>We don't have any Collections yet.</p>
+    <div class="alert alert-success" style="margin-top:20px">
+        @TempData["message"]
+    </div>
 }
-else
-{
-    <table>
-        <thead>
-            <tr>
-                <th>Collection Id </th>
-                <th>Collection Name </th>
-                <th>Collection File Type </th>
-                <th>Collection File Extension </th>
-            </tr>
-        </thead>
 
-        <tbody>
-            @foreach (var collection in Model)
-            {
-                <tr>
-                    <td>@Html.ActionLink(collection.Name, "Collection", "Collection", new { id = collection.Id }, null) </td>
-                    <td>@collection.Id </td>
-                    <td>@collection.Name </td>
-                    <td>@collection.CollectionFileType.FileType </td>
-                    <td>@collection.CollectionFileType.FileExtension </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+
+<h2 class="text-info">All Defined Data Ingestions</h2>
+
+<hr />
+<div class="container">
+
+
+    <div class="row text-center">
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <input type="button" class="btn btn-primary active btn-lg" value="Define New Ingestion Schema" onclick="@("window.location.href='" + @Url.Action("New", "Collection") + "'");" />
+        </div>
+    </div>
 
     <hr />
 
-    <ul>
+    @if (!Model.Any())
+    {
+        <p>We don't have any Collections yet.</p>
+    }
+    else
+    {
+        <div class="col">
+            <table class="table table-hover table-info">
+                <thead class="thead-dark">
+                    <tr class="table-info">
+                        <th class="text-center">Collection Name</th>
+                        <th class="text-center">Collection Id</th>
+                        <th class="text-center">Collection Description</th>
+                        <th class="text-center">Collection File Type</th>
+                        <th class="text-center">Collection File Extension</th>
+                        <th class="text-center">Collection Data Steward</th>
+                        <th class="text-center">Collection Authorised</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var collection in Model)
+                    {
+                    <tr>
+                        <td class="text-center">@Html.ActionLink(collection.Name, "Collection", "Collection", new { id = collection.Id }, null) </td>
+                        <td class="text-center">@collection.Id </td>
+                        <td class="text-center">@collection.Name </td>
+                        <td class="text-center">@collection.CollectionFileType.FileType </td>
+                        <td class="text-center">@collection.CollectionFileType.FileExtension </td>
+                        <td class="text-center">@collection.DataSteward </td>
+                        <td class="text-center">@collection.Authorised </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <hr />
 
-        <li>@Html.ActionLink("Create New Ingestion", "New", "Collection")</li>
 
-    </ul>
-}
+    }
 
-
+</div>

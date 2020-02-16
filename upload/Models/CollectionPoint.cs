@@ -12,9 +12,9 @@ namespace upload.Models
         public int Id { get; set; }
         [Required]
         public string Attribute { get; set; }
-        [Required]
         public PointType PointType { get; set; }
         [Required]
+        [Display(Name = "Point Data Type")]
         public int PointTypeId { get; set; }
         public string Comments { get; set; }
         public Collection Collection{ get; set; }

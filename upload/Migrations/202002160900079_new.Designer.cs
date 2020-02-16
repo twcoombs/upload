@@ -13,7 +13,7 @@ namespace upload.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202002100841473_new"; }
+            get { return "202002160900079_new"; }
         }
         
         string IMigrationMetadata.Source

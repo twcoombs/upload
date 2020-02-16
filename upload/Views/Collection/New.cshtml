@@ -3,23 +3,45 @@
     ViewBag.Title = "New";
 }
 
-<h2>Create a New Collection</h2>
+<h2 class="text-info">Create a new collection from a file</h2>
 
-@using (Html.BeginForm("Create", "Collection"))
+<hr />
+<p class="text-info">Information:</p>
+<p>From this page you can upload a file that contains a sample of your new data collection. Magic Box will attempt to understand the structure of your file and define the meta-data of the colelction for you. You will have the opportunity to make adjustments to the interpreted schema before pulishing the data collection </p>
+<hr />
+
+
+@using (Html.BeginForm("Create", "Collection", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="form-group">
         @Html.LabelFor(m => m.Collection.Name)
         @Html.TextBoxFor(m => m.Collection.Name, new { @class = "form-control" })
     </div>
     <div class="form-group">
+        @Html.LabelFor(m => m.Collection.Description)
+        @Html.TextBoxFor(m => m.Collection.Description, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Collection.DataSteward)
+        @Html.TextBoxFor(m => m.Collection.DataSteward, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <p>
+            If you have an example file Magic Box will attempt to read the Meta-data<br />
+            as a started for the set of collection points required
+        </p>
+    </div>
+    <div class="form-group">
         @Html.LabelFor(m => m.Collection.CollectionFileType.FileType)
         @Html.DropDownListFor(m => m.Collection.CollectionFileTypeId, new SelectList(Model.CollectionFileTypes, "Id", "FileType"), "Select File Type", new { @class = "form-control" })
     </div>
+    @Html.HiddenFor(m => m.Collection.Authorised, new { @class = "form-control" })
+
     <div class="form-group">
-        <label for="exampleInputFile">Choose File</label>
-        <input type="file" id="exampleInputFile">
-        <p class="help-block">Select the Template File</p>
+        @Html.TextBoxFor(m => m.Collection.TemplateFile, new { type = "file" })
     </div>
+
+
 
     <button type="submit" class="btn btn-primary">Submit File</button>
 

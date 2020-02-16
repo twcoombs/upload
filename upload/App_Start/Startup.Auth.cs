@@ -54,15 +54,15 @@ namespace upload
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "137623037425573",
+               appSecret: "17887f046813d34fc152a68312e0a086");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "1033606316092-c1l7n28dai6dq8p9t19a2iqu3eritc4h.apps.googleusercontent.com",
+                ClientSecret = "EFer_MUHSk07Q1flWq985rnr"
+            });
         }
     }
 }

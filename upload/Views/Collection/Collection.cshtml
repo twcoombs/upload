@@ -6,38 +6,79 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@Model.Collection.Name</h2>
+<h2 class="text-info">@Model.Collection.Name</h2>
+
+@if (TempData["message"] != null)
+{
+    <div class="alert alert-warning" style="margin-top:20px">
+        @TempData["message"]
+    </div>
+}
+
+@if (Model.Collection.Authorised == 0)
+{
+    <div class="alert alert-info" style="margin-top:20px">
+        Collection is not yet authorised by Data Steward
+    </div>
+}
+
+
+
+<hr />
+<p class="text-info">Collection Description:</p>
+<p>@Model.Collection.Description</p>
+<hr />
+<p class="text-info">Collection Data Steward:</p>
+<p>@Model.Collection.DataSteward</p>
+<hr />
+
+
 
 @if (Model.CollectionPoints.Count == 0)
 {
-    <text> No Collection Meta-data Defined Within Collection </text>
+    <text> No Collection Meta-data Yet Defined Within Ingestion </text>
+    <br />
+    <br />
+    @Html.ActionLink("Return to Ingestion List", "Index", "Collection", null, new { @class = "clsButtonFake" });
+
+
 }
 else
 {
+    <p class="text-info">Collection Meta Data:</p>
+    <br />
+    <br />
     using (Html.BeginForm("SaveCollectionPoint", "Collection"))
     {
 
         foreach (var collectionPoint in Model.CollectionPoints.WithIndex())
         {
-<div class="form-inline">
-    @Html.LabelFor(m => m.CollectionPoints[collectionPoint.Index].Attribute)
-    @Html.TextBoxFor(m => m.CollectionPoints[collectionPoint.Index].Attribute, new { @class = "form-control" })
-    
-    @Html.LabelFor(m => m.CollectionPoints[collectionPoint.Index].PointTypeId)
-    @Html.DropDownListFor(m => m.CollectionPoints[collectionPoint.Index].PointTypeId, new SelectList(Model.PointTypes, "Id", "Type",Model.CollectionPoints[collectionPoint.Index].PointTypeId),new { @class = "form-control" })
-    
-    @Html.LabelFor(m => m.CollectionPoints[collectionPoint.Index].Comments)
-    @Html.TextBoxFor(m => m.CollectionPoints[collectionPoint.Index].Comments, new { @class = "form-control" })
-    @Html.HiddenFor(m => m.CollectionPoints[collectionPoint.Index].Id, new { @class = "form-control" })
-    @Html.HiddenFor(m => m.CollectionPoints[collectionPoint.Index].CollectionId, new { @class = "form-control" })
-</div>
+
+            <div class="form-inline">
+                @Html.LabelFor(m => m.CollectionPoints[collectionPoint.Index].Attribute)
+                @Html.TextBoxFor(m => m.CollectionPoints[collectionPoint.Index].Attribute, new { @class = "form-control" })
+
+                @Html.LabelFor(m => m.CollectionPoints[collectionPoint.Index].PointTypeId)
+                @Html.DropDownListFor(m => m.CollectionPoints[collectionPoint.Index].PointTypeId, new SelectList(Model.PointTypes, "Id", "Type", Model.CollectionPoints[collectionPoint.Index].PointTypeId), new { @class = "form-control" })
+
+                @Html.LabelFor(m => m.CollectionPoints[collectionPoint.Index].Comments)
+                @Html.TextBoxFor(m => m.CollectionPoints[collectionPoint.Index].Comments, new { @class = "form-control" })
+                @Html.HiddenFor(m => m.CollectionPoints[collectionPoint.Index].Id, new { @class = "form-control" })
+                @Html.HiddenFor(m => m.CollectionPoints[collectionPoint.Index].CollectionId, new { @class = "form-control" })
+                @Html.HiddenFor(m => m.Collection.Name, new { @class = "form-control" })
+            </div>
 
         }
 
         <hr />
-        <button type="submit" class="btn btn-primary">Submit Changes</button>
+        <button type="submit" class="btn btn-primary">Commit Changes</button>
+        @Html.ActionLink("Don't Commit Changes", "Index", "Collection", null, new { @class = "clsButtonFake" })
     }
+
+
 }
+
+
 
 
 

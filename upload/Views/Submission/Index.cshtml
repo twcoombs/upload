@@ -1,0 +1,35 @@
+﻿@model IEnumerable<upload.Models.Submission>
+@using System.Web.Mvc.Html;
+
+@{
+    ViewBag.Title = "Submissions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (TempData["message"] != null)
+{
+    <div class="alert alert-success" style="margin-top:20px">
+        @TempData["message"]
+    </div>
+}
+
+<h2 class="text-info">All Defined Data Submissions</h2>
+
+<hr />
+
+<div class="container">
+
+    <div class="row text-center">
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <input type="button" class="btn btn-primary active btn-lg" value="Define New Submission" onclick="@("window.location.href='" + @Url.Action("New", "Submission") + "'");" />
+        </div>
+    </div>
+
+    <hr />
+
+    @if (!Model.Any())
+    {
+        <p>We don't have any Defined Submissions yet.</p>
+    }
+
+</div>

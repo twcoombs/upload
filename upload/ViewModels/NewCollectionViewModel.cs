@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,5 +11,6 @@ namespace upload.ViewModels
     {
         public Collection Collection { get; set; }
         public IEnumerable<CollectionFileType> CollectionFileTypes { get; set; }
+
     }
 }
