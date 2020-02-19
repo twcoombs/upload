@@ -31,5 +31,66 @@
     {
         <p>We don't have any Defined Submissions yet.</p>
     }
+    else
+    {
+        <div class="col">
+            <table id="submissions" class="table table-hover table-info">
+                <thead class="thead-dark">
+                    <tr class="table-info">
+                        <th class="text-center">Delete</th>
+                        <th class="text-center">Submission Name</th>
+                        <th class="text-center">Submission Id</th>
+                        <th class="text-center">Submission Description</th>
+                        <th class="text-center">Submission File Type</th>
+                        <th class="text-center">Submission File Extension</th>
+                        <th class="text-center">Submission Collection</th>
+                        <th class="text-center">Submission Authorised</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var submission in Model)
+                    {
+                        <tr>
+                            <td><button data-submission-id="@submission.Id"class="btn-link js-delete">Delete</button></td>
+                            <td class="text-center">@Html.ActionLink(submission.Name, "Submission", "Submission", new { id = submission.Id }, null) </td>
+                            <td class="text-center">@submission.Id </td>
+                            <td class="text-center">@submission.Name </td>
+                            <td class="text-center">@submission.CollectionFileType.FileType </td>
+                            <td class="text-center">@submission.CollectionFileType.FileExtension </td>
+                            <td class="text-center">@submission.Collection.Name</td>
+                            <td class="text-center">@submission.Authorised </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <hr />
+
+
+    }
+
 
 </div>
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#submissions .js-delete").on("click", function () {
+                var button = $(this);
+                bootbox.confirm("Are you sure you want to delete this Submission?", function (result) {
+                    if (result) {
+                        $.ajax({
+                        url: "/api/Submissions/" + button.attr("data-submission-id"),
+                        method: "DELETE",
+                        success: function () {
+                            console.log("Success")
+                            button.parents("tr").remove();
+                        }
+                    });
+                    }
+                });
+            });
+        });
+    </script>
+    
+}

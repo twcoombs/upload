@@ -6,20 +6,23 @@ using System.Web;
 
 namespace upload.Models
 {
-    public class CollectionPoint
+    public class SubmissionPoint
     {
         [Required]
-        [Display(Name = "Ingestion Data Point")]
         public int Id { get; set; }
-        [Display(Name = "Ingestion Data Point")]
         [Required]
         public string Attribute { get; set; }
+        [Display(Name = "Point Meta-data")]
         public PointType PointType { get; set; }
         [Required]
-        [Display(Name = "Point Data Type")]
+        [Display(Name = "Point Meta-data")]
         public int PointTypeId { get; set; }
         public string Comments { get; set; }
-        public Collection Collection{ get; set; }
-        public int CollectionId { get; set; }
+        [Display(Name = "Mapping Point")]
+        public CollectionPoint CollectionPoint { get; set; }
+        [Display(Name = "Mapping Point")]
+        public int CollectionPointId { get; set; }
+        public Submission Submission { get; set; }
+        public int SubmissionId { get; set; }
     }
 }

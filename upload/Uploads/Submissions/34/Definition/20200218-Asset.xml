@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<Asset>
+   <SubAsset id="a101">
+      <name>An Asset</name>
+      <id>1</id>
+      <value>Internal</value>
+   </SubAsset>
+   <SubAsset id="a102">
+      <name>An Asset</name>
+      <id>1</id>
+      <value>Internal</value>
+   </SubAsset>
+   <SubAsset id="a103">
+      <name>An Asset</name>
+      <id>1</id>
+      <value>Internal</value>
+   </SubAsset>
+   <SubAsset id="a104">
+      <name>An Asset</name>
+      <id>1</id>
+      <value>Internal</value>
+   </SubAsset>
+</Asset>

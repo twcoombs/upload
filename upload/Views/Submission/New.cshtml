@@ -1,0 +1,48 @@
+﻿@model upload.ViewModels.NewSubmissionViewModel
+
+@{
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-info">Create a new submission from a file and map to an existing ingestion</h2>
+
+<hr />
+<p class="text-info">Information:</p>
+<p>From this page you can upload a file that contains a sample of your new data submission. Magic Box will attempt to understand the structure of your file and allow you to map the collection point schema to an existing data ingestion definition </p>
+<hr />
+
+@using (Html.BeginForm("CreateXML", "Submission", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Submission.Name)
+        @Html.TextBoxFor(m => m.Submission.Name, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Submission.Description)
+        @Html.TextBoxFor(m => m.Submission.Description, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Submission.Collection.Name)
+        @Html.DropDownListFor(m => m.Submission.CollectionId, new SelectList(Model.Collection, "Id", "Name"), "Select Collection", new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <p>
+            If you have an example file Magic Box will attempt to read the file as a starter for the set of submission points
+        </p>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Submission.CollectionFileType.FileType)
+        @Html.DropDownListFor(m => m.Submission.CollectionFileTypeId, new SelectList(Model.CollectionFileTypes, "Id", "FileType"), "Select File Type", new { @class = "form-control" })
+    </div>
+    @Html.HiddenFor(m => m.Submission.Authorised, new { @class = "form-control" })
+
+
+    <div class="form-group">
+        @Html.TextBoxFor(m => m.Submission.TemplateFile, new { type = "file" })
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Submit File</button>
+
+}

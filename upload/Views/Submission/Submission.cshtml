@@ -1,0 +1,93 @@
+﻿@model upload.ViewModels.SubmissionAndPointViewModel
+
+@using upload.Extensions
+@{
+    ViewBag.Title = "Submission";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-info">@Model.Submission.Name for @Model.Submission.Collection.Name</h2>
+
+@if (TempData["message"] != null)
+{
+    <div class="alert alert-warning" style="margin-top:20px">
+        @TempData["message"]
+    </div>
+}
+
+@if (Model.Submission.Authorised == 0)
+{
+    <div class="alert alert-info" style="margin-top:20px">
+        Submission is not yet authorised by Data Steward
+    </div>
+}
+
+
+<hr />
+<p class="text-info">Ingestion Description:</p>
+<p>@Model.Submission.Collection.Description</p>
+<hr />
+<p class="text-info">Ingestion Data Steward:</p>
+<p>@Model.Submission.Collection.DataSteward</p>
+<hr />
+<p class="text-info">Ingestion Description:</p>
+<p>@Model.Submission.Description</p>
+<hr />
+<p class="text-info">Collection Mapping:</p>
+<p>This submission supplies data for Ingestion Number: <strong>@Model.Submission.Collection.Id</strong> (@Model.Submission.Collection.Name)</p>
+<p>Download Original Definition File: <strong>@Model.Submission.FilePath</strong></p>
+<hr />
+
+
+
+@if (Model.SubmissionPoints.Count == 0)
+{
+    <text> No Submission Meta-data Yet Defined Within Submission </text>
+    <br />
+    <br />
+    @Html.ActionLink("Return to Submission List", "Index", "Submission", null, new { @class = "clsButtonFake" });
+
+}
+else
+{
+    <p class="text-info">Submission Meta Data:</p>
+    <br />
+    <br />
+    using (Html.BeginForm("SaveSubmissionPoint", "Submission"))
+    {
+
+        foreach (var submissionPoint in Model.SubmissionPoints.WithIndex())
+        {
+
+<div class="form-inline">
+    @Html.LabelFor(m => m.SubmissionPoints[submissionPoint.Index].Attribute)
+    @Html.TextBoxFor(m => m.SubmissionPoints[submissionPoint.Index].Attribute, new { @class = "form-control" })
+
+    @Html.LabelFor(m => m.SubmissionPoints[submissionPoint.Index].PointTypeId)
+    @Html.DropDownListFor(m => m.SubmissionPoints[submissionPoint.Index].PointTypeId, new SelectList(Model.PointTypes, "Id", "Type", Model.SubmissionPoints[submissionPoint.Index].PointTypeId), new { @class = "form-control" })
+
+    @Html.LabelFor(m => m.SubmissionPoints[submissionPoint.Index].Comments)
+    @Html.TextBoxFor(m => m.SubmissionPoints[submissionPoint.Index].Comments, new { @class = "form-control" })
+
+    ||
+
+    @Html.LabelFor(m => m.SubmissionPoints[submissionPoint.Index].CollectionPoint.Id)
+    @Html.DropDownListFor(m => m.SubmissionPoints[submissionPoint.Index].CollectionPointId, new SelectList(Model.CollectionPoints, "Id", "Attribute", Model.SubmissionPoints[submissionPoint.Index].CollectionPointId), new { @class = "form-control" })
+
+    @Html.HiddenFor(m => m.SubmissionPoints[submissionPoint.Index].Id, new { @class = "form-control" })
+    @Html.HiddenFor(m => m.SubmissionPoints[submissionPoint.Index].SubmissionId, new { @class = "form-control" })
+    @Html.HiddenFor(m => m.Submission.Collection.Name, new { @class = "form-control" })
+    @Html.HiddenFor(m => m.Submission.CollectionFileTypeId, new { @class = "form-control" })
+    @Html.HiddenFor(m => m.Submission.Id, new { @class = "form-control" })
+</div>
+
+        }
+
+        <hr />
+        <button type="submit" class="btn btn-primary">Commit Changes</button>
+        @Html.ActionLink("Don't Commit Changes", "Index", "Submission", null, new { @class = "clsButtonFake" })
+    }
+
+
+}
+

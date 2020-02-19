@@ -1,0 +1,30 @@
+﻿@model IEnumerable<upload.ViewModels.CollectionsViewModel>
+
+@{
+    ViewBag.Title = "Upload";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-info">Upload a file for submission to a Data Ingestion</h2>
+
+<hr />
+
+<p class="text-info">Pick a Collection and then a Submission to Upload a File:</p>
+
+<hr />
+
+@using (Html.BeginForm("CollectionRead", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-inline">
+        <div class="form-group">
+            @Html.LabelFor(m=> m.Collection.Name)
+            @Html.DropDownListFor(m => m.Collection.Id, new SelectList(Model.Collection, "Id", "Name"), new { @class = "form-control" })
+
+        </div>
+    </div>
+    <hr />
+    <button type="submit" class="btn btn-primary">Submit File</button>
+
+}
+
+}

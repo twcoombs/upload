@@ -86,7 +86,6 @@ namespace upload.Controllers
         //[HttpPost]
         public ActionResult Collection(int id, string newCollectionList)
         {
-
             var collection = _context.Collection.SingleOrDefault(c => c.Id == id);
 
             var collectionPoints = _context.CollectionPoint.Where(cp => cp.CollectionId == id).ToList();
@@ -126,7 +125,7 @@ namespace upload.Controllers
         public ActionResult SaveCollectionPoint(CollectionAndPointViewModel viewModel)
         {
             foreach(CollectionPoint collectionPoint in viewModel.CollectionPoints) {
-                Debug.WriteLine(collectionPoint.Id);
+
                 if (collectionPoint.Id == 0)
                 {
                     _context.CollectionPoint.Add(collectionPoint);
@@ -143,7 +142,7 @@ namespace upload.Controllers
 
             _context.SaveChanges();
 
-            TempData["message"] = "You successfully updated the collection " + viewModel.Collection.Name + " with the suggested changes";
+            TempData["message"] = "You successfully updated the ingestion " + viewModel.Collection.Name + " with the suggested changes";
             //redirect to Collection
             return RedirectToAction("Index", "Collection");
         }
@@ -183,14 +182,7 @@ namespace upload.Controllers
 
             List<string> headers = csv.readCSV(collection.FilePath);
 
-            foreach (var temp in headers)
-            {
-                TempData["message"] = TempData["message"] + "||" + temp;
-            }
-
-            //TempData["message"] = "This Collection Has Been Created From Uploaded File: " + FileName + " If you do not click submit to save Collection Points before exiting this screen they will be lost";
-
-            TempData["list"] = headers;
+            TempData["message"] = "This Collection Has Been Created From Uploaded File: " + FileName + " If you do not click submit to save Collection Points before exiting this screen they will be lost";
 
             return RedirectToAction("Collection", new RouteValueDictionary(
             new { controller = "Collection", action = "Collection", newCollectionList = JsonConvert.SerializeObject(headers.ToList()), id = collection.Id}));

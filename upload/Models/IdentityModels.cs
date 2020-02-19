@@ -27,6 +27,11 @@ namespace upload.Models
         public DbSet<CollectionFileType> CollectionFileType { get; set; }
         public DbSet<PointType> PointType { get; set; }
         public DbSet<Submission> Submission { get; set; }
+        public DbSet<SubmissionPoint> SubmissionPoint { get; set; }
+
+        public DbSet<CollectionInstance> CollectionInstance { get; set; }
+
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

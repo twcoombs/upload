@@ -3,23 +3,21 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using upload.Models;
 
-namespace upload.Models
+namespace upload.Dtos
 {
-    public class CollectionPoint
+    public class CollectionPointDto
     {
         [Required]
-        [Display(Name = "Ingestion Data Point")]
         public int Id { get; set; }
-        [Display(Name = "Ingestion Data Point")]
         [Required]
         public string Attribute { get; set; }
         public PointType PointType { get; set; }
         [Required]
-        [Display(Name = "Point Data Type")]
         public int PointTypeId { get; set; }
         public string Comments { get; set; }
-        public Collection Collection{ get; set; }
+        public Collection Collection { get; set; }
         public int CollectionId { get; set; }
     }
 }
